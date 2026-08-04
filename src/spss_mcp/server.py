@@ -1514,3 +1514,168 @@ async def spss_glm_univariate(
         if ctx:
             await ctx.error(f"spss_glm_univariate error: {e}")
         return f"Error: {e}"
+
+
+# ??? P1: Paper-ready chart tools ??????????????????????????????????????????????
+
+
+async def _run_chart_export(
+    spec, ctx, image_format, width_px, height_px, dpi, data_file
+) -> str:
+    err = _require_spss(ctx)
+    if err:
+        return f"Error: {err}"
+
+    from spss_mcp.chart_service import export_chart
+
+    try:
+        result = await export_chart(
+            spec,
+            image_format=image_format,
+            width_px=width_px,
+            height_px=height_px,
+            dpi=dpi,
+            data_file=data_file,
+        )
+    except Exception as e:
+        if ctx:
+            await ctx.error(f"chart export error: {e}")
+        return f"Error: {e}"
+
+    if not result["success"]:
+        return f"Error: {result.get('error')}"
+
+    lines = [f"**Chart exported ({spec.kind})**", ""]
+    for img in result["images"]:
+        if img["success"]:
+            lines.append(
+                f"- `{img['path']}`  ({img['format']}, {img['width']}x{img['height']}, "
+                f"{img['bytes']} bytes, {img['dpi']} dpi)"
+            )
+        else:
+            lines.append(f"- `{img['path']}`  validation failed: {img.get('error')}")
+    return "\n".join(lines)
+
+
+@mcp.tool(
+    name="spss_chart_histogram",
+    description=(
+        "Export a publication-ready histogram (PNG/TIFF/EMF) via GGRAPH + OMS IMAGE. "
+        "Provide the continuous variable; the chart file path is returned for direct submission."
+    ),
+)
+async def spss_chart_histogram(
+    variable: str,
+    data_file: Optional[str] = None,
+    title: Optional[str] = None,
+    x_label: Optional[str] = None,
+    y_label: Optional[str] = None,
+    image_format: Literal["PNG", "TIFF", "EMF"] = "PNG",
+    width_px: int = 1950,
+    height_px: int = 1500,
+    dpi: int = 300,
+    ctx: Context = None,
+) -> str:
+    from spss_mcp.chart_spec import HistogramSpec
+
+    spec = HistogramSpec(
+        variable=variable,
+        title=title,
+        x_label=x_label,
+        y_label=y_label,
+    )
+    return await _run_chart_export(
+        spec, ctx, image_format, width_px, height_px, dpi, data_file
+    )
+
+
+@mcp.tool(
+    name="spss_chart_scatter",
+    description=(
+        "Export a publication-ready scatter plot (PNG/TIFF/EMF) via GGRAPH + OMS IMAGE. "
+        "Provide x and y variables; the chart file path is returned for direct submission."
+    ),
+)
+async def spss_chart_scatter(
+    x: str,
+    y: str,
+    data_file: Optional[str] = None,
+    title: Optional[str] = None,
+    x_label: Optional[str] = None,
+    y_label: Optional[str] = None,
+    image_format: Literal["PNG", "TIFF", "EMF"] = "PNG",
+    width_px: int = 1950,
+    height_px: int = 1500,
+    dpi: int = 300,
+    ctx: Context = None,
+) -> str:
+    from spss_mcp.chart_spec import ScatterSpec
+
+    spec = ScatterSpec(x=x, y=y, title=title, x_label=x_label, y_label=y_label)
+    return await _run_chart_export(
+        spec, ctx, image_format, width_px, height_px, dpi, data_file
+    )
+
+
+@mcp.tool(
+    name="spss_chart_bar",
+    description=(
+        "Export a publication-ready bar chart (PNG/TIFF/EMF) of a categorical variable "
+        "against the mean (or sum) of a continuous variable, via GGRAPH + OMS IMAGE."
+    ),
+)
+async def spss_chart_bar(
+    category: str,
+    value: str,
+    stat: Literal["mean", "sum"] = "mean",
+    data_file: Optional[str] = None,
+    title: Optional[str] = None,
+    x_label: Optional[str] = None,
+    y_label: Optional[str] = None,
+    image_format: Literal["PNG", "TIFF", "EMF"] = "PNG",
+    width_px: int = 1950,
+    height_px: int = 1500,
+    dpi: int = 300,
+    ctx: Context = None,
+) -> str:
+    from spss_mcp.chart_spec import BarSpec
+
+    spec = BarSpec(
+        category=category,
+        value=value,
+        stat=stat,
+        title=title,
+        x_label=x_label,
+        y_label=y_label,
+    )
+    return await _run_chart_export(
+        spec, ctx, image_format, width_px, height_px, dpi, data_file
+    )
+
+
+@mcp.tool(
+    name="spss_chart_line",
+    description=(
+        "Export a publication-ready line chart (PNG/TIFF/EMF) via GGRAPH + OMS IMAGE. "
+        "Provide the x (time/ordinal) and y variables; the file path is returned."
+    ),
+)
+async def spss_chart_line(
+    x: str,
+    y: str,
+    data_file: Optional[str] = None,
+    title: Optional[str] = None,
+    x_label: Optional[str] = None,
+    y_label: Optional[str] = None,
+    image_format: Literal["PNG", "TIFF", "EMF"] = "PNG",
+    width_px: int = 1950,
+    height_px: int = 1500,
+    dpi: int = 300,
+    ctx: Context = None,
+) -> str:
+    from spss_mcp.chart_spec import LineSpec
+
+    spec = LineSpec(x=x, y=y, title=title, x_label=x_label, y_label=y_label)
+    return await _run_chart_export(
+        spec, ctx, image_format, width_px, height_px, dpi, data_file
+    )

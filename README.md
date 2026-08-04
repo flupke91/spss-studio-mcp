@@ -38,10 +38,21 @@ spss-studio-mcp status
 spss-studio-mcp version
 ```
 
+## P1 chart pipeline (PoC)
+
+```powershell
+python -m spss_mcp.poc_chart                 # PNG @300dpi, 1950x1500
+python -m spss_mcp.poc_chart --format TIFF   # TIFF variant
+```
+
+Generates a sample dataset, exports histogram / scatter / bar / line charts
+via GGRAPH + OMS IMAGE, and validates each PNG/TIFF/EMF with Pillow.
+Requires a licensed IBM SPSS Statistics installation.
+
 ## Roadmap
 
-- P0: skeleton + Codex config + CI (this branch)
-- P1: paper-ready chart pipeline (GGRAPH + OMS IMAGE export, PNG/TIFF/EMF)
+- P0: skeleton + Codex config + CI (done)
+- P1: paper-ready chart pipeline (GGRAPH + OMS IMAGE export, PNG/TIFF/EMF; PoC scaffolding in place)
 - P2: deep result parsing (Markdown + JSON + chart extraction)
 - P3: verify all 37 tools on real SPSS + mediation/moderation tools
 - P4: security layer (allowlists, dry-run, audit) + release
