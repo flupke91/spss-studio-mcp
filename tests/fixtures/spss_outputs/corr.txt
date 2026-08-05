@@ -1,0 +1,32 @@
+Correlations
+Notes
+
+ Output Created                               05-AUG-2026 00:11:40              
+ Comments                                                                       
+ Input         Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 120                               
+ Missing Value Definition of Missing          User-defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     Statistics for each pair of       
+                                              variables are based on all the    
+                                              cases with valid data for that    
+                                              pair.                             
+ Syntax                                       CORRELATIONS /VARIABLES=x y       
+                                              /PRINT=TWOTAIL NOSIG.             
+                                                                                
+ Resources     Processor Time                 00:00:00.00                       
+               Elapsed Time                   00:00:00.00                       
+
+Correlations
+
+                       x         y         
+ x Pearson Correlation 1         .419(***) 
+   Sig. (2-tailed)               .000      
+   N                   120       120       
+ y Pearson Correlation .419(***) 1         
+   Sig. (2-tailed)     .000                
+   N                   120       120       
+*** Correlation is significant at the 0.001 level (2-tailed).
+

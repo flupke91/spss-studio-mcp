@@ -1,0 +1,91 @@
+Factor Analysis
+Notes
+
+ Output Created                               05-AUG-2026 12:35:14              
+ Comments                                                                       
+ Input         Data                           D:\opencode\spss-studio-mcp\examp 
+                                              les\data\survey_study.sav         
+               Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 200                               
+ Missing Value Definition of Missing          MISSING=EXCLUDE: User-defined     
+ Handling                                     missing values are treated as     
+                                              missing.                          
+               Cases Used                     LISTWISE: Statistics are based on 
+                                              cases with no missing values for  
+                                              any variable used.                
+ Syntax                                       FACTOR /VARIABLES=q1 TO q12       
+                                              /PRINT=INITIAL KMO EXTRACTION     
+                                              /EXTRACTION=PC /ROTATION=NOROTATE 
+                                              /CRITERIA=FACTORS(3).             
+                                                                                
+ Resources     Processor Time                 00:00:00.00                       
+               Elapsed Time                   00:00:00.04                       
+               Maximum Memory Required        18976 (18.531K) bytes             
+
+Warnings
+
+ The CRITERIA subcommand following EXTRACTION or ROTATION subcommands will be ignored. Default criteria will be used. 
+
+KMO and Bartlett's Test
+
+ Kaiser-Meyer-Olkin Measure of Sampling Adequacy. .504   
+ Bartlett's Test of Sphericity Approx. Chi-Square 64.684 
+                               df                 66     
+                               Sig.               .523   
+
+Communalities
+
+                       Initial Extraction 
+ 学习投入题项 1  1.000   .486       
+ 学习投入题项 2  1.000   .472       
+ 学习投入题项 3  1.000   .596       
+ 学习投入题项 4  1.000   .617       
+ 学习投入题项 5  1.000   .380       
+ 学习投入题项 6  1.000   .687       
+ 学习投入题项 7  1.000   .615       
+ 学习投入题项 8  1.000   .732       
+ 学习投入题项 9  1.000   .543       
+ 学习投入题项 10 1.000   .569       
+ 学习投入题项 11 1.000   .750       
+ 学习投入题项 12 1.000   .734       
+Extraction Method: Principal Component Analysis.
+
+Total Variance Explained
+
+ Component Initial Eigenvalues              Extraction Sums of Squared Loadings 
+           Total % of Variance Cumulative % Total    % of Variance Cumulative % 
+ 1         1.454 12.119        12.119       1.454    12.119        12.119       
+ 2         1.302 10.851        22.969       1.302    10.851        22.969       
+ 3         1.220 10.168        33.137       1.220    10.168        33.137       
+ 4         1.133 9.445         42.582       1.133    9.445         42.582       
+ 5         1.066 8.884         51.466       1.066    8.884         51.466       
+ 6         1.003 8.359         59.825       1.003    8.359         59.825       
+ 7         .973  8.107         67.932                                           
+ 8         .883  7.358         75.291                                           
+ 9         .818  6.818         82.109                                           
+ 10        .765  6.374         88.483                                           
+ 11        .729  6.076         94.559                                           
+ 12        .653  5.441         100.000                                          
+Extraction Method: Principal Component Analysis.
+
+Component Matrix(a)
+
+                       Component                           
+                       1     2     3     4     5     6     
+ 学习投入题项 1  -.462 -.327 .239  .222  -.243 .017  
+ 学习投入题项 2  .141  .180  -.515 .328  .128  -.176 
+ 学习投入题项 3  .391  -.512 .144  -.260 -.294 .074  
+ 学习投入题项 4  -.449 .374  .261  -.035 .053  -.451 
+ 学习投入题项 5  -.353 .034  .067  .085  -.445 -.211 
+ 学习投入题项 6  .039  -.518 -.144 .140  .611  -.060 
+ 学习投入题项 7  -.366 -.007 .454  .055  .402  .332  
+ 学习投入题项 8  -.295 .441  -.469 -.043 .008  .478  
+ 学习投入题项 9  .257  .318  .401  -.035 .364  -.286 
+ 学习投入题项 10 .451  .349  .109  -.477 -.055 -.030 
+ 学习投入题项 11 .301  .255  .428  .378  -.095 .509  
+ 学习投入题项 12 .401  .090  .051  .710  -.156 -.185 
+Extraction Method: Principal Component Analysis.
+a 6 components extracted.
+

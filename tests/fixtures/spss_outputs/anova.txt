@@ -1,0 +1,51 @@
+Oneway
+Notes
+
+ Output Created                               05-AUG-2026 00:11:39              
+ Comments                                                                       
+ Input         Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 120                               
+ Missing Value Definition of Missing          User-defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     Statistics for each analysis are  
+                                              based on cases with no missing    
+                                              data for any variable in the      
+                                              analysis.                         
+ Syntax                                       ONEWAY score BY group             
+                                              /STATISTICS=DESCRIPTIVES          
+                                              HOMOGENEITY.                      
+                                                                                
+ Resources     Processor Time                 00:00:00.02                       
+               Elapsed Time                   00:00:00.03                       
+
+Descriptives
+ score 
+
+       N   Mean    Std.      Std.    95% Confidence Interval    Minimum Maximum 
+                   Deviation Error   for Mean                                   
+                                     Lower Bound    Upper Bound                 
+ .00   60  50.4380 10.08391  1.30183 47.8330        53.0429     29.55   73.71   
+ 1.00  60  57.9552 11.14318  1.43858 55.0766        60.8338     27.37   82.82   
+ Total 120 54.1966 11.23498  1.02561 52.1658        56.2274     27.37   82.82   
+
+Tests of Homogeneity of Variances
+
+                                           Levene Statistic df1 df2     Sig.(a) 
+ score Based on Mean                       .076             1   118     .783    
+       Based on Median                     .068             1   118     .795    
+       Based on Median and with adjusted   .068             1   114.503 .795    
+       df                                                                       
+       Based on trimmed mean               .076             1   118     .784    
+a Confidence Interval: 0%
+
+ANOVA
+ score 
+
+                Sum of Squares df  Mean Square F      Sig.(a) 
+ Between Groups 1695.246       1   1695.246    15.012 .000    
+ Within Groups  13325.495      118 112.928                    
+ Total          15020.741      119                            
+a Confidence Interval: 95%
+

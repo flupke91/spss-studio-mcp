@@ -1,0 +1,47 @@
+T-Test
+Notes
+
+ Output Created                               05-AUG-2026 12:35:10              
+ Comments                                                                       
+ Input         Data                           D:\opencode\spss-studio-mcp\examp 
+                                              les\data\experiment_study.sav     
+               Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 120                               
+ Missing Value Definition of Missing          User defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     Statistics for each analysis are  
+                                              based on the cases with no        
+                                              missing or out-of-range data for  
+                                              any variable in the analysis.     
+ Syntax                                       T-TEST PAIRS=pretest WITH         
+                                              posttest (PAIRED).                
+                                                                                
+ Resources     Processor Time                 00:00:00.00                       
+               Elapsed Time                   00:00:00.02                       
+
+D:\opencode\spss-studio-mcp\examples\data\experiment_study.sav
+Paired Samples Statistics
+
+                   Mean    N   Std. Deviation Std. Error Mean 
+ Pair 前测成绩 61.1417 120 11.79039       1.07631         
+ 1    后测成绩 71.0250 120 13.43297       1.22626         
+
+Paired Samples Correlations
+
+                                    N   Correlation Significance            
+                                                    One-Sided p Two-Sided p 
+ Pair 1 前测成绩 & 后测成绩 120 .784        .000        .000        
+
+Paired Samples Test
+
+               Paired Differences                   t       df  Significance    
+               Mean    Std.    Std.  95% Confidence             One-Sid Two-Sid 
+                       Deviati Error Interval of                                
+                       on      Mean  the Difference                             
+                                     Lower  Upper               ed p    ed p    
+ Pair 1 前测成绩 -9.8833 8.43481 .7699 -11.40 -8.3586 -12.836 119 .000    .000    
+        -      3               9     799    8                                   
+        后测成绩                                                                  
+

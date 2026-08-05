@@ -1,153 +1,62 @@
 # spss-studio-mcp 快速开始
 
-> 3 步完成部署，5 分钟开始使用
+> 3 步完成部署，5 分钟开始使用（已在 IBM SPSS Statistics 32 真机验证）
 
 ---
 
-## 配套讲解页
+## 第 1 步：安装
 
-培训网页主题：`Claude Code 与 SPSS-MCP：从概念到一键配置`
-
-适合现场演示的讲解顺序：
-1. Claude Code 是什么
-2. MCP 协议解决了什么问题
-3. Claude Code 安装与配置
-4. GLM key 获取
-5. SPSS-MCP 一键安装与自动配置
-6. 用自然语言完成一次 SPSS 分析
-
-### 联系方式
-
-- 公众号：`人类变量`
-- 微信：`Exekiel179`
-
----
-
-## 🚀 一键安装（推荐）
-
-### Windows 用户
-
-1. **克隆项目**
-```bash
-git clone https://github.com/your-org/spss-studio-mcp.git
-cd spss-studio-mcp
+```powershell
+cd D:\opencode\spss-studio-mcp
+pip install -e ".[dev]"
+spss-studio-mcp status   # 应显示 SPSS batch: OK
 ```
 
-2. **运行安装脚本**
-```bash
-# 双击运行（或在命令行执行）
-install.bat
+## 第 2 步：配置 MCP 客户端
+
+```powershell
+spss-studio-mcp configure-codex     # Codex（~/.codex/config.toml）
+spss-studio-mcp configure-claude    # Claude Code（~/.claude.json）
+spss-studio-mcp setup-info          # 手动配置片段
 ```
 
-3. **重启 Claude Code**
+## 第 3 步：使用
 
-完成！现在可以在 Claude Code 中使用自然语言进行 SPSS 分析了。
+### 统计分析
 
----
+直接向客户端描述需求，例如：
 
-## 📝 手动安装
+- `对 examples/data/survey_study.sav 做描述统计和可靠性分析`
+- `用 examples/data/experiment_study.sav 做独立样本 t 检验（group 分组，posttest）`
+- `对 examples/data/mediation_study.sav 做中介分析：autonomy → satisfaction → performance`
 
-如果一键安装失败，按以下步骤操作：
+### 论文级出图
 
-### 步骤 1：安装 SPSS-MCP
+- `画 examples/data/survey_study.sav 学习投入总分的直方图（带正态密度），PNG 300dpi`
+- `用 examples/data/survival_study.sav 画按 treatment 分组的 KM 生存曲线`
+- `用 examples/data/experiment_study.sav 画后测成绩按组别的箱线图`
 
-```bash
-pip install -e .
-```
+所有图表工具都会返回 1950×1500 @300dpi 的文件路径，可直接用于投稿。
 
-验证安装：
-```bash
-spss-studio-mcp status
-```
+### 结构化结果
 
-### 步骤 2：配置 Claude Code
+- 调用 `spss_structured_result` 获得 `{markdown, json, files, warnings}` 统一结构；
+  统计摘要（t/F/r/B/p 等）会自动出现在各分析工具的返回末尾（`### 统计摘要`）。
 
-推荐直接自动配置：
+## 安全
 
-```bash
-spss-studio-mcp configure-claude
-```
+- 危险命令（HOST / ERASE / DELETE FILE 等）会被拦截；
+- 数据文件需位于 `examples/`、系统临时目录或 `SPSS_ALLOWED_DIRS` 指定目录；
+- `spss_run_syntax(..., dry_run=True)` 可先校验不执行；
+- 审计日志默认写入 `logs/audit.jsonl`（可用 `SPSS_AUDIT_LOG` 改路径）。
 
-这个命令会自动检测 SPSS、备份 Claude Code 现有用户配置，并写入 `mcpServers.spss`。
+## 样例与文档
 
-如果你想手动配置，再打开 Claude Code，按 `Ctrl + ,`，搜索 `mcpServers`，添加以下配置：
+- 样例数据与归档图：`examples/`
+- 文档：`docs/`（出图管线 PoC、结果解析、方法验证记录）
 
-```json
-{
-  "mcpServers": {
-    "spss": {
-      "command": "spss-studio-mcp",
-      "args": ["serve", "--transport", "stdio"]
-    }
-  }
-}
-```
+## 常见问题
 
-然后保存并重启 Claude Code。
-
-### 步骤 3：验证连接
-
-在 Claude Code 中输入：
-```
-检查 SPSS 状态
-```
-
-如果看到版本信息，说明配置成功！
-
----
-
-## ⚙️ 可选配置
-
-### SPSS 路径未检测到？
-
-创建 `.env` 文件：
-```ini
-SPSS_INSTALL_PATH=C:\Program Files\IBM\SPSS Statistics\31
-```
-
-### 分析超时？
-
-在 `.env` 中增加超时：
-```ini
-SPSS_TIMEOUT=300
-```
-
-### SPSS 启动超时？
-
-如果是第一次启动 SPSS 引擎就超时，而不是分析过程超时，请单独增加启动超时：
-
-```ini
-SPSS_STARTUP_TIMEOUT=300
-```
-
-`SPSS_TIMEOUT` 控制分析执行超时，`SPSS_STARTUP_TIMEOUT` 控制 SPSS 引擎启动握手超时。
-
----
-
-## 💡 开始使用
-
-直接用中文描述分析需求：
-
-```
-请对 data.sav 进行描述性统计
-```
-
-```
-分析 age 和 income 的相关性
-```
-
-```
-用 t 检验比较男女收入差异
-```
-
----
-
-## 📖 完整文档
-
-详细配置和所有功能请查看 [README.md](README.md)
-
-## 🆘 遇到问题？
-
-- 运行 `spss-studio-mcp status` 检查状态
-- 查看 [README.md](README.md) 的故障排除部分
-- 提交问题：https://github.com/Exekiel179/SPSS-MCP/issues
+- **启动慢**：首次引擎启动约 15–20 秒，之后为常驻会话。
+- **提示未授权**：确保 SPSS 试用/正式授权可用，勿同时开多个 SPSS 会话。
+- **数据文件被拒**：把文件放入 `examples/data/`，或用 `SPSS_ALLOWED_DIRS` 声明目录。

@@ -109,6 +109,7 @@ class KaplanMeierParams(MethodParams):
 
 class DiscriminantParams(MethodParams):
     groups: str
+    group_values: Optional[list[int]] = None
     predictors: list[str] = Field(min_length=1)
     method: Literal["DIRECT", "WILKS", "MAHAL"] = "DIRECT"
     priors: Literal["EQUAL", "SIZE"] = "EQUAL"
@@ -138,7 +139,7 @@ class HierarchicalClusterParams(MethodParams):
 class TwoStepClusterParams(MethodParams):
     continuous: Optional[list[str]] = None
     categorical: Optional[list[str]] = None
-    distance: Literal["EUCLID", "CHISQ"] = "EUCLID"
+    distance: Literal["LIKELIHOOD", "EUCLIDEAN"] = "LIKELIHOOD"
     num_clusters: Optional[int] = None
     max_clusters: int = 15
     outlier_handling: bool = True
@@ -159,6 +160,7 @@ class TwoStepClusterParams(MethodParams):
 class ManovaParams(MethodParams):
     dependents: list[str] = Field(min_length=2)
     factors: list[str] = Field(min_length=1)
+    factor_ranges: Optional[dict[str, list[int]]] = None
     covariates: Optional[list[str]] = None
     method: Literal["SSTYPE1", "SSTYPE2", "SSTYPE3", "SSTYPE4"] = "SSTYPE3"
     print_multivariate: bool = True

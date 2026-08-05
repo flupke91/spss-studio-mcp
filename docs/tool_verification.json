@@ -1,0 +1,79 @@
+[
+  {
+    "case": "import_csv",
+    "ok": true,
+    "error": null,
+    "seconds": 0.1,
+    "marker_hit": true
+  },
+  {
+    "case": "read_data",
+    "ok": true,
+    "error": null,
+    "seconds": 0.0,
+    "marker_hit": true
+  },
+  {
+    "case": "file_summary",
+    "ok": true,
+    "error": null,
+    "seconds": 0.1,
+    "marker_hit": true
+  },
+  {
+    "case": "list_variables",
+    "ok": true,
+    "error": null,
+    "seconds": 0.0,
+    "marker_hit": true
+  },
+  {
+    "case": "read_metadata",
+    "ok": true,
+    "error": null,
+    "seconds": 0.0,
+    "marker_hit": true
+  },
+  {
+    "case": "list_files",
+    "ok": true,
+    "error": null,
+    "seconds": 0.0,
+    "marker_hit": true
+  },
+  {
+    "case": "check_status",
+    "ok": true,
+    "error": null,
+    "seconds": 0.0,
+    "marker_hit": true
+  },
+  {
+    "case": "validate_syntax",
+    "ok": true,
+    "error": null,
+    "seconds": 0.3,
+    "marker_hit": true
+  },
+  {
+    "case": "structured_result",
+    "ok": true,
+    "error": null,
+    "seconds": 0.3,
+    "marker_hit": true
+  },
+  {
+    "case": "run_syntax_full",
+    "ok": true,
+    "error": null,
+    "seconds": 11.4,
+    "marker_hit": true
+  },
+  {
+    "case": "genlin",
+    "ok": true,
+    "error": null,
+    "seconds": 1.3,
+    "marker_hit": true
+  }
+]

@@ -1,0 +1,50 @@
+T-Test
+Notes
+
+ Output Created                               05-AUG-2026 00:11:38              
+ Comments                                                                       
+ Input         Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 120                               
+ Missing Value Definition of Missing          User defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     Statistics for each analysis are  
+                                              based on the cases with no        
+                                              missing or out-of-range data for  
+                                              any variable in the analysis.     
+ Syntax                                       T-TEST GROUPS=group(0 1)          
+                                              /VARIABLES=score.                 
+                                                                                
+ Resources     Processor Time                 00:00:00.00                       
+               Elapsed Time                   00:00:00.01                       
+
+Group Statistics
+
+       group N  Mean    Std. Deviation Std. Error Mean 
+ score .00   60 50.4380 10.08391       1.30183         
+       1.00  60 57.9552 11.14318       1.43858         
+
+Independent Samples Test
+
+               t-test for Equality of Means                                     
+               t      df      Significance   Mean     Std.     95% Confidence   
+                                             Differen Error    Interval of the  
+                                             ce       Differen Difference       
+                              One-Sid Two-Si          ce       Lower   Upper    
+                              ed p    ded p                                     
+ score Equal   -3.875 118     .000    .000   -7.51719 1.94017  -11.359 -3.67513 
+       varianc                                                 26               
+       es                                                                       
+       assumed                                                                  
+       Equal   -3.875 116.842 .000    .000   -7.51719 1.94017  -11.359 -3.67473 
+       varianc                                                 66               
+       es not                                                                   
+       assumed                                                                  
+
+Homogeneity of Variance Test
+
+                               Levene's Test for Equality of Variances 
+                               F                                  Sig. 
+ score Equal variances assumed .076                               .783 
+

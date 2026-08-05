@@ -1,0 +1,26 @@
+Descriptives
+Notes
+
+ Output Created                               05-AUG-2026 00:11:41              
+ Comments                                                                       
+ Input         Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 120                               
+ Missing Value Definition of Missing          User defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     All non-missing data are used.    
+ Syntax                                       DESCRIPTIVES VARIABLES=score x y  
+                                              /STATISTICS=MEAN STDDEV MIN MAX.  
+                                                                                
+ Resources     Processor Time                 00:00:00.00                       
+               Elapsed Time                   00:00:00.01                       
+
+Descriptive Statistics
+
+                    N   Minimum Maximum Mean    Std. Deviation 
+ score              120 27.37   82.82   54.1966 11.23498       
+ x                  120 1.02    6.99    4.0086  1.75782        
+ y                  120 .31     14.81   7.7819  3.40456        
+ Valid N (listwise) 120                                        
+

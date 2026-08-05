@@ -14,7 +14,19 @@ import argparse
 import sys
 
 from spss_mcp.chart_service import export_chart
-from spss_mcp.chart_spec import BarSpec, HistogramSpec, LineSpec, ScatterSpec
+from spss_mcp.chart_spec import (
+    AreaSpec,
+    BarErrorSpec,
+    BarSpec,
+    BoxplotSpec,
+    ErrorbarSpec,
+    HistogramDensitySpec,
+    HistogramSpec,
+    KMCurveSpec,
+    LineSpec,
+    QQPlotSpec,
+    ScatterSpec,
+)
 
 SAMPLE_DATA_SYNTAX = """INPUT PROGRAM.
 LOOP #i = 1 TO 200.
@@ -22,11 +34,14 @@ LOOP #i = 1 TO 200.
   COMPUTE score = RV.NORMAL(50, 10).
   COMPUTE x = RV.UNIFORM(0, 100).
   COMPUTE y = 2 * x + RV.NORMAL(0, 15).
+  COMPUTE time = RV.EXP(2) + 1.
+  COMPUTE status = RV.BERNOULLI(0.7).
   END CASE.
 END LOOP.
 END FILE.
 END INPUT PROGRAM.
 EXECUTE.
+DESCRIPTIVES VARIABLES=score x y time.
 """
 
 
@@ -59,6 +74,47 @@ def _specs() -> list:
             title="Line of y vs x",
             x_label="x",
             y_label="y",
+        ),
+        BoxplotSpec(
+            variable="score",
+            category="group",
+            title="Boxplot of score by group",
+            x_label="Group",
+            y_label="Score",
+        ),
+        ErrorbarSpec(
+            category="group",
+            value="score",
+            title="Mean score with 95% CI by group",
+            x_label="Group",
+            y_label="Mean score",
+        ),
+        QQPlotSpec(variable="score", title="Normal Q-Q of score"),
+        KMCurveSpec(
+            time="time",
+            status="status",
+            group="group",
+            title="Kaplan-Meier survival by group",
+        ),
+        AreaSpec(
+            x="x",
+            y="y",
+            title="Area of y vs x",
+            x_label="x",
+            y_label="y",
+        ),
+        HistogramDensitySpec(
+            variable="score",
+            title="Histogram with normal density of score",
+            x_label="Score",
+            y_label="Frequency",
+        ),
+        BarErrorSpec(
+            category="group",
+            value="score",
+            title="Mean score with 95% CI bars by group",
+            x_label="Group",
+            y_label="Mean score",
         ),
     ]
 

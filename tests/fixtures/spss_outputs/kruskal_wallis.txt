@@ -1,0 +1,38 @@
+NPar Tests
+Notes
+
+ Output Created                           05-AUG-2026 12:35:13                  
+ Comments                                                                       
+ Input     Data                           D:\opencode\spss-studio-mcp\examples\ 
+                                          data\survey_study.sav                 
+           Filter                         <none>                                
+           Weight                         <none>                                
+           Split File                     <none>                                
+           N of Rows in Working Data File 200                                   
+ Syntax                                   NPAR TESTS /K-W=engagement_total BY   
+                                          major(1 3).                           
+                                                                                
+ Resources Processor Time                 00:00:00.02                           
+           Elapsed Time                   00:00:00.02                           
+           Number of Cases Allowed(a)     449389                                
+a Based on availability of workspace memory.
+
+D:\opencode\spss-studio-mcp\examples\data\survey_study.sav
+Kruskal-Wallis Test
+Ranks
+
+                    专业 N   Mean Rank 
+ 学习投入总分 文科 80  96.24     
+                    理科 74  104.22    
+                    工科 46  101.93    
+                    Total  200           
+
+Test Statistics(a,b)
+
+                  学习投入总分 
+ Kruskal-Wallis H .775               
+ df               2                  
+ Asymp. Sig.      .679               
+a Kruskal Wallis Test
+b Grouping Variable: 专业
+

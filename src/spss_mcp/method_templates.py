@@ -49,8 +49,6 @@ def render_ordinal_regression(file_path: str, params: OrdinalRegressionParams) -
     if params.save_predicted:
         syntax += "  /SAVE=PCPROB ACPROB\n"
     syntax += "  /PRINT=FIT PARAMETER SUMMARY\n"
-    if params.test_parallel:
-        syntax += "  /TEST=PARALLEL\n"
     syntax += "  /CRITERIA=CIN(95) DELTA(0) LCONVERGE(0) MXITER(100) MXSTEP(5) PCONVERGE(1.0E-6) SINGULAR(1.0E-8).\n"
     return syntax
 
@@ -63,20 +61,15 @@ def render_genlin(file_path: str, params: GenlinParams) -> str:
     else:
         syntax += "\n"
     if params.categorical:
-        syntax += f"  /CATEGORICAL={' '.join(params.categorical)}\n"
-    syntax += (
-        f"  /MODEL {' '.join(params.predictors)} DISTRIBUTION={params.distribution}"
-    )
+        syntax += f"  /CATEGORICAL {' '.join(params.categorical)}\n"
+    syntax += f"  /MODEL {' '.join(params.predictors)} INTERCEPT=YES DISTRIBUTION={params.distribution}"
     if params.link:
-        syntax += f" LINK={params.link}\n"
-    else:
-        syntax += "\n"
-    if params.scale:
-        syntax += f"  /SCALE={params.scale}\n"
+        syntax += f" LINK={params.link}"
+    syntax += "\n"
     if params.save_predicted:
-        syntax += "  /SAVE=PRED RESID\n"
-    syntax += "  /PRINT=SOLUTION SUMMARY\n"
-    syntax += "  /CRITERIA=SCALE=1 COVB=MODEL PCONVERGE=1E-6 SINGULAR=1E-12 ANALYSISTYPE=3(WALD) CILEVEL=95 CITYPE=WALD LIKELIHOOD=FULL.\n"
+        syntax += "  /SAVE PRED RESID\n"
+    syntax += "  /PRINT SOLUTION\n"
+    syntax += "  /CRITERIA SCALE=1 COVB=MODEL PCONVERGE=1E-6 SINGULAR=1E-12 ANALYSISTYPE=3(WALD) CILEVEL=95 CITYPE=WALD LIKELIHOOD=FULL.\n"
     return syntax
 
 
@@ -103,7 +96,6 @@ def render_mixed(file_path: str, params: MixedParams) -> str:
             syntax += f" COVTYPE({params.repeated_type})\n"
         else:
             syntax += " COVTYPE(AR1)\n"
-    syntax += f"  /METHOD={params.method}\n"
     syntax += "  /PRINT=SOLUTION TESTCOV\n"
     syntax += "  /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE).\n"
     return syntax
@@ -111,6 +103,8 @@ def render_mixed(file_path: str, params: MixedParams) -> str:
 
 def render_genlinmixed(file_path: str, params: GenlinMixedParams) -> str:
     syntax = f"GET FILE='{_slash_file(file_path)}'.\n"
+    if params.subject:
+        syntax += f"VARIABLE LEVEL {params.subject} (NOMINAL).\n"
     syntax += "GENLINMIXED\n"
     syntax += f"  /DATA_STRUCTURE SUBJECTS={params.subject}\n" if params.subject else ""
     syntax += f"  /FIELDS TARGET={params.dependent} TRIALS=NONE OFFSET=NONE\n"
@@ -125,10 +119,9 @@ def render_genlinmixed(file_path: str, params: GenlinMixedParams) -> str:
     syntax += "  /BUILD_OPTIONS TARGET_CATEGORY_ORDER=ASCENDING INPUTS_CATEGORY_ORDER=ASCENDING MAX_ITERATIONS=100 CONFIDENCE_LEVEL=95 DF_METHOD=RESIDUAL COVB=ROBUST\n"
     syntax += f"  /TARGET_OPTIONS DISTRIBUTION={params.distribution}"
     if params.link:
-        syntax += f" LINK={params.link}\n"
+        syntax += f" LINK={params.link}.\n"
     else:
-        syntax += "\n"
-    syntax += "  /PRINT SOLUTION.\n"
+        syntax += ".\n"
     return syntax
 
 
@@ -168,10 +161,10 @@ def render_kaplan_meier(file_path: str, params: KaplanMeierParams) -> str:
 def render_discriminant(file_path: str, params: DiscriminantParams) -> str:
     syntax = f"GET FILE='{_slash_file(file_path)}'.\n"
     syntax += "DISCRIMINANT\n"
-    syntax += f"  /GROUPS={params.groups}\n"
+    group_values = params.group_values or [1, 2]
+    syntax += f"  /GROUPS={params.groups}({group_values[0]} {group_values[1]})\n"
     syntax += f"  /VARIABLES={' '.join(params.predictors)}\n"
     syntax += "  /ANALYSIS ALL\n"
-    syntax += f"  /METHOD={params.method}\n"
     syntax += f"  /PRIORS={params.priors}\n"
     if params.save_scores or params.save_class:
         save_opts = []
@@ -192,7 +185,6 @@ def render_cluster_hierarchical(
     syntax += f"CLUSTER {' '.join(params.variables)}\n"
     if params.id_variable:
         syntax += f"  /ID={params.id_variable}\n"
-    syntax += f"  /METHOD={params.method}\n"
     syntax += f"  /MEASURE={params.measure}\n"
     syntax += "  /PRINT=SCHEDULE CLUSTER(2,4)\n"
     if params.dendrogram:
@@ -209,26 +201,30 @@ def render_twostep_cluster(file_path: str, params: TwoStepClusterParams) -> str:
         syntax += f"  /CONTINUOUS {' '.join(params.continuous)}\n"
     if params.categorical:
         syntax += f"  /CATEGORICAL {' '.join(params.categorical)}\n"
-    syntax += f"  /DISTANCE={params.distance}\n"
+    syntax += f"  /DISTANCE {params.distance}\n"
     if params.num_clusters:
-        syntax += f"  /NUMCLUSTERS=FIXED({params.num_clusters})\n"
+        syntax += f"  /NUMCLUSTERS FIXED={params.num_clusters}\n"
     else:
-        syntax += f"  /NUMCLUSTERS=AUTO({params.max_clusters})\n"
-    if params.outlier_handling:
-        syntax += "  /OUTLIERS=YES\n"
-    syntax += "  /PRINT=MODELINFO CLUSTERINFO\n"
-    syntax += "  /PLOT=SILHOUETTE.\n"
+        syntax += f"  /NUMCLUSTERS AUTO={params.max_clusters}.\n"
     return syntax
 
 
 def render_manova(file_path: str, params: ManovaParams) -> str:
     syntax = f"GET FILE='{_slash_file(file_path)}'.\n"
-    syntax += f"MANOVA {' '.join(params.dependents)} BY {' '.join(params.factors)}"
+    ranges = params.factor_ranges or {}
+    factors_str = " ".join(
+        (
+            f"{factor}({ranges[factor][0]} {ranges[factor][1]})"
+            if factor in ranges
+            else f"{factor}(1 2)"
+        )
+        for factor in params.factors
+    )
+    syntax += f"MANOVA {' '.join(params.dependents)} BY {factors_str}"
     if params.covariates:
         syntax += f" WITH {' '.join(params.covariates)}\n"
     else:
         syntax += "\n"
-    syntax += f"  /METHOD={params.method}\n"
     print_opts = []
     if params.print_multivariate:
         print_opts.append("SIGNIF(MULTIV)")

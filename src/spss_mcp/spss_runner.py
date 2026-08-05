@@ -159,6 +159,71 @@ async def run_syntax(
             "warnings": [],
         }
 
+    # ---- P4 security gate: dangerous commands, path allowlist, audit ----
+    from spss_mcp.security import (
+        audit,
+        check_syntax_safety,
+        summarize_syntax,
+        validate_data_file,
+    )
+
+    blocked = check_syntax_safety(syntax)
+    if blocked:
+        audit(
+            {
+                "event": "blocked",
+                "reason": "dangerous_syntax",
+                "detail": ", ".join(blocked),
+                "syntax": summarize_syntax(syntax),
+            }
+        )
+        return {
+            "success": False,
+            "timed_out": False,
+            "last_error_level": 0,
+            "process_returncode": None,
+            "parsed_errors": [f"dangerous syntax: {', '.join(blocked)}"],
+            "parsed_warnings": [],
+            "output_markdown": "",
+            "output_raw": "",
+            "error": f"Syntax blocked: dangerous commands {', '.join(blocked)}.",
+            "warnings": [],
+            "tables": [],
+            "summary": {"summaries": [], "text": ""},
+            "files": [],
+        }
+
+    path_error = validate_data_file(data_file) if data_file else None
+    if not path_error:
+        for m in re.finditer(r"GET FILE='([^']+)'", syntax):
+            path_error = validate_data_file(m.group(1))
+            if path_error:
+                break
+    if path_error:
+        audit(
+            {
+                "event": "blocked",
+                "reason": "path",
+                "detail": path_error,
+                "syntax": summarize_syntax(syntax),
+            }
+        )
+        return {
+            "success": False,
+            "timed_out": False,
+            "last_error_level": 0,
+            "process_returncode": None,
+            "parsed_errors": [path_error],
+            "parsed_warnings": [],
+            "output_markdown": "",
+            "output_raw": "",
+            "error": path_error,
+            "warnings": [],
+            "tables": [],
+            "summary": {"summaries": [], "text": ""},
+            "files": [],
+        }
+
     run_id = uuid.uuid4().hex[:12]
     temp_dir = get_temp_dir()
     results_dir = get_results_dir()
@@ -283,6 +348,22 @@ async def run_syntax(
         except Exception:
             pass  # non-fatal: result is still returned even if open fails
 
+    from spss_mcp.result_parser import parse_tables, summarize_analysis
+
+    tables = parse_tables(raw_output)
+
+    from spss_mcp.security import audit, summarize_syntax
+
+    audit(
+        {
+            "event": "syntax_run",
+            "syntax": summarize_syntax(syntax),
+            "data_file": data_file or "",
+            "success": success,
+            "error": error_msg or "",
+        }
+    )
+
     return {
         "success": success,
         "timed_out": timed_out,
@@ -297,6 +378,9 @@ async def run_syntax(
         "viewer_error": viewer_error,
         "error": error_msg,
         "warnings": warnings,
+        "tables": tables,
+        "summary": summarize_analysis(raw_output, tables),
+        "files": [f for f in (viewer_output_file, syntax_output_file) if f],
     }
 
 
@@ -440,7 +524,7 @@ def build_correlations_syntax(
     two_tailed: bool,
 ) -> str:
     vars_str = " ".join(variables)
-    sig = "TAILS(2)" if two_tailed else "TAILS(1)"
+    sig = "TWOTAIL" if two_tailed else "ONETAIL"
     if method.lower() == "spearman":
         return (
             f"GET FILE='{file_path}'.\n"
@@ -508,7 +592,7 @@ def build_compute_scale_syntax(
     reverse_min: float | None,
     reverse_max: float | None,
 ) -> str:
-    items_str = " ".join(items)
+    items_str = ", ".join(items)
     func = "MEAN" if method.lower() == "mean" else "SUM"
 
     reverse_lines = ""
@@ -584,6 +668,56 @@ def build_nonparametric_syntax(
 
     raise ValueError(
         "Unsupported test_type. Use: mann_whitney, wilcoxon, kruskal_wallis"
+    )
+
+
+def build_mediation_syntax(
+    file_path: str,
+    x: str,
+    mediator: str,
+    y: str,
+) -> str:
+    """Three-step (Baron & Kenny) mediation regression syntax.
+
+    Step 1: M ~ X (path a); Step 2: Y ~ X (total effect c);
+    Step 3: Y ~ X + M (paths c' and b).  Coefficients are parsed from the
+    output to compute the indirect effect a*b and a Sobel test.
+    """
+    return (
+        f"GET FILE='{file_path}'.\n"
+        f"REGRESSION /STATISTICS=COEFF\n"
+        f"  /DEPENDENT={mediator}\n"
+        f"  /METHOD=ENTER {x}.\n"
+        f"REGRESSION /STATISTICS=COEFF\n"
+        f"  /DEPENDENT={y}\n"
+        f"  /METHOD=ENTER {x}.\n"
+        f"REGRESSION /STATISTICS=COEFF\n"
+        f"  /DEPENDENT={y}\n"
+        f"  /METHOD=ENTER {x} {mediator}.\n"
+    )
+
+
+def build_moderation_syntax(
+    file_path: str,
+    x: str,
+    moderator: str,
+    y: str,
+) -> str:
+    """Mean-centred moderation regression syntax (Y ~ X + W + X*W).
+
+    The interaction term is created after centring both predictors with
+    AGGREGATE column means; the interaction coefficient tests moderation.
+    """
+    return (
+        f"GET FILE='{file_path}'.\n"
+        f"AGGREGATE /OUTFILE=* MODE=ADDVARIABLES /BREAK=\n"
+        f"  /{x}_mean=MEAN({x}) /{moderator}_mean=MEAN({moderator}).\n"
+        f"COMPUTE {x}_c = {x} - {x}_mean.\n"
+        f"COMPUTE {moderator}_c = {moderator} - {moderator}_mean.\n"
+        f"COMPUTE interaction = {x}_c * {moderator}_c.\n"
+        f"REGRESSION /STATISTICS=COEFF\n"
+        f"  /DEPENDENT={y}\n"
+        f"  /METHOD=ENTER {x}_c {moderator}_c interaction.\n"
     )
 
 

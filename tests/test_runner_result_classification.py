@@ -41,3 +41,24 @@ Warnings
     assert _extract_syntax_issue_warnings(raw_output) == [
         "The SHOW command contains an invalid keyword: TIME."
     ]
+
+
+def test_build_mediation_syntax_three_steps():
+    from spss_mcp.spss_runner import build_mediation_syntax
+
+    syntax = build_mediation_syntax("F:/data/m.sav", "x", "m", "y")
+    assert syntax.count("REGRESSION /STATISTICS=COEFF") == 3
+    assert "DEPENDENT=m" in syntax
+    assert "DEPENDENT=y" in syntax
+    assert "METHOD=ENTER x m." in syntax
+
+
+def test_build_moderation_syntax_centring_and_interaction():
+    from spss_mcp.spss_runner import build_moderation_syntax
+
+    syntax = build_moderation_syntax("F:/data/m.sav", "x", "w", "y")
+    assert "AGGREGATE /OUTFILE=* MODE=ADDVARIABLES /BREAK=" in syntax
+    assert "COMPUTE x_c = x - x_mean." in syntax
+    assert "COMPUTE w_c = w - w_mean." in syntax
+    assert "COMPUTE interaction = x_c * w_c." in syntax
+    assert "METHOD=ENTER x_c w_c interaction." in syntax

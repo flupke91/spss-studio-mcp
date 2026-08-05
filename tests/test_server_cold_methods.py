@@ -92,3 +92,22 @@ def test_run_syntax_tool_passes_case_selection(monkeypatch):
     )
     assert captured["filter_variable"] == "keep_flag"
     assert captured["select_if"] is None
+
+
+def test_format_run_result_appends_statistical_summary():
+    rendered = server._format_run_result(
+        {
+            "error": None,
+            "output_markdown": "table",
+            "summary": {"text": "ANOVA: F(1, 118) = 15.012, p <.001."},
+        }
+    )
+    assert "### 统计摘要" in rendered
+    assert "ANOVA: F(1, 118) = 15.012" in rendered
+
+
+def test_format_run_result_skips_empty_summary():
+    rendered = server._format_run_result(
+        {"error": None, "output_markdown": "table", "summary": {"text": ""}}
+    )
+    assert "### 统计摘要" not in rendered

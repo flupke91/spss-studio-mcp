@@ -1,0 +1,96 @@
+Logistic Regression
+Notes
+
+ Output Created                                     05-AUG-2026 12:35:10        
+ Comments                                                                       
+ Input                  Data                        D:\opencode\spss-studio-mcp 
+                                                    \examples\data\survival_stu 
+                                                    dy.sav                      
+                        Filter                      <none>                      
+                        Weight                      <none>                      
+                        Split File                  <none>                      
+                        N of Rows in Working Data   150                         
+                        File                                                    
+ Missing Value Handling Definition of Missing       User-defined missing values 
+                                                    are treated as missing      
+ Syntax                                             LOGISTIC REGRESSION         
+                                                    VARIABLES=status            
+                                                    /METHOD=ENTER treatment     
+                                                    time.                       
+                                                                                
+ Resources              Processor Time              00:00:00.02                 
+                        Elapsed Time                00:00:00.01                 
+
+D:\opencode\spss-studio-mcp\examples\data\survival_study.sav
+Case Processing Summary
+
+ Unweighted Cases(a)                      N   Percent 
+ Selected Cases      Included in Analysis 150 100.0   
+                     Missing Cases        0   .0      
+                     Total                150 100.0   
+ Unselected Cases                         0   .0      
+ Total                                    150 100.0   
+a If weight is in effect, see classification table for the total number of cases.
+
+Dependent Variable Encoding
+
+ Original Value Internal Value 
+ 删失         0              
+ 死亡         1              
+
+Block 0: Beginning Block
+Classification Table(a,b)
+
+      Observed            Predicted                
+                          结局状态  Percentage 
+                          删失 死亡 Correct    
+ Step 结局状态 删失 0      29     .0         
+ 0                 死亡 0      121    100.0      
+      Overall Percentage                80.7       
+a Constant is included in the model.
+b The cut value is .500
+
+Variables in the Equation
+
+                 B     S.E. Wald   df Sig. Exp(B) 
+ Step 0 Constant 1.428 .207 47.736 1  .000 4.172  
+
+Variables not in the Equation
+
+                             Score df Sig. 
+ Step Variables 治疗方案 .091  1  .763 
+ 0              随访月数 .019  1  .891 
+      Overall Statistics     .183  2  .913 
+
+Block 1: Method = Enter
+Omnibus Tests of Model Coefficients
+
+            Chi-square df Sig. 
+ Step Step  .182       2  .913 
+ 1    Block .182       2  .913 
+      Model .182       2  .913 
+
+Model Summary
+
+ Step -2 Log likelihood Cox & Snell R Square Nagelkerke R Square 
+ 1    147.124(a)        .001                 .002                
+a Estimation terminated at iteration number 4 because parameter estimates changed by less than .001.
+
+Classification Table(a)
+
+      Observed            Predicted                
+                          结局状态  Percentage 
+                          删失 死亡 Correct    
+ Step 结局状态 删失 0      29     .0         
+ 1                 死亡 0      121    100.0      
+      Overall Percentage                80.7       
+a The cut value is .500
+
+Variables in the Equation
+
+                   B     S.E. Wald  df Sig. Exp(B) 
+ Step 治疗方案 .187  .462 .163  1  .686 1.205  
+ 1(a) 随访月数 .006  .019 .091  1  .763 1.006  
+      Constant     1.065 .870 1.501 1  .220 2.902  
+a Variable(s) entered on step 1: 治疗方案, 随访月数.
+

@@ -1,0 +1,210 @@
+[
+  {
+    "case": "descriptives",
+    "tool": "spss_descriptives",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 4.7
+  },
+  {
+    "case": "frequencies",
+    "tool": "spss_frequencies",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.5
+  },
+  {
+    "case": "correlations",
+    "tool": "spss_correlations",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.9
+  },
+  {
+    "case": "crosstabs",
+    "tool": "spss_crosstabs",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.6
+  },
+  {
+    "case": "normality_outliers",
+    "tool": "spss_normality_outliers",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 3.6
+  },
+  {
+    "case": "reliability_alpha",
+    "tool": "spss_reliability_alpha",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 2.1
+  },
+  {
+    "case": "factor",
+    "tool": "spss_factor",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 2.1
+  },
+  {
+    "case": "compute_scale_score",
+    "tool": "spss_compute_scale_score",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 2.1
+  },
+  {
+    "case": "glm_univariate",
+    "tool": "spss_glm_univariate",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.5
+  },
+  {
+    "case": "cluster_hierarchical",
+    "tool": "spss_cluster_hierarchical",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 6.0
+  },
+  {
+    "case": "twostep_cluster",
+    "tool": "spss_twostep_cluster",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 2.0
+  },
+  {
+    "case": "discriminant",
+    "tool": "spss_discriminant",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 2.9
+  },
+  {
+    "case": "manova",
+    "tool": "spss_manova",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.9
+  },
+  {
+    "case": "ttest_independent",
+    "tool": "spss_t_test",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 2.1
+  },
+  {
+    "case": "ttest_paired",
+    "tool": "spss_t_test",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.6
+  },
+  {
+    "case": "ttest_one_sample",
+    "tool": "spss_t_test",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.4
+  },
+  {
+    "case": "nonparam_mann_whitney",
+    "tool": "spss_nonparametric_tests",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.5
+  },
+  {
+    "case": "nonparam_wilcoxon",
+    "tool": "spss_nonparametric_tests",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.3
+  },
+  {
+    "case": "repeated_measures_anova",
+    "tool": "spss_repeated_measures_anova",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 2.0
+  },
+  {
+    "case": "kaplan_meier",
+    "tool": "spss_kaplan_meier",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 3.1
+  },
+  {
+    "case": "cox_regression",
+    "tool": "spss_cox_regression",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.6
+  },
+  {
+    "case": "logistic_regression",
+    "tool": "spss_logistic_regression",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.9
+  },
+  {
+    "case": "regression",
+    "tool": "spss_regression",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.5
+  },
+  {
+    "case": "ordinal_regression",
+    "tool": "spss_ordinal_regression",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.9
+  },
+  {
+    "case": "mixed",
+    "tool": "spss_mixed",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 1.8
+  },
+  {
+    "case": "genlinmixed",
+    "tool": "spss_genlinmixed",
+    "ok": true,
+    "error": null,
+    "marker_hit": true,
+    "seconds": 15.3
+  }
+]

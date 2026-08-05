@@ -1,0 +1,38 @@
+Frequencies
+Notes
+
+ Output Created                               05-AUG-2026 00:11:41              
+ Comments                                                                       
+ Input         Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 120                               
+ Missing Value Definition of Missing          User-defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     Statistics are based on all cases 
+                                              with valid data.                  
+ Syntax                                       FREQUENCIES VARIABLES=group       
+                                              /STATISTICS=MEAN MEDIAN MODE      
+                                              STDDEV.                           
+                                                                                
+ Resources     Processor Time                 00:00:00.00                       
+               Elapsed Time                   00:00:00.01                       
+
+Statistics
+ group 
+
+ N      Valid   120    
+        Missing 0      
+ Mean           .5000  
+ Median         .5000  
+ Mode           .00(a) 
+ Std. Deviation .50210 
+a Multiple modes exist. The smallest value is shown
+
+group
+
+             Frequency Percent Valid Percent Cumulative Percent 
+ Valid .00   60        50.0    50.0          50.0               
+       1.00  60        50.0    50.0          100.0              
+       Total 120       100.0   100.0                            
+

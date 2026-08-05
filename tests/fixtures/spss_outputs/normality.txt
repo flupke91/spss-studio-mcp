@@ -1,0 +1,40 @@
+Explore
+Notes
+
+ Output Created                               05-AUG-2026 12:35:14              
+ Comments                                                                       
+ Input         Data                           D:\opencode\spss-studio-mcp\examp 
+                                              les\data\survey_study.sav         
+               Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 200                               
+ Missing Value Definition of Missing          User-defined missing values for   
+ Handling                                     dependent variables are treated   
+                                              as missing.                       
+               Cases Used                     Statistics are based on cases     
+                                              with no missing values for any    
+                                              dependent variable or factor      
+                                              used.                             
+ Syntax                                       EXAMINE                           
+                                              VARIABLES=engagement_total /PLOT  
+                                              NPPLOT /STATISTICS NONE /MISSING  
+                                              LISTWISE /NOTOTAL.                
+                                                                                
+ Resources     Processor Time                 00:00:02.59                       
+               Elapsed Time                   00:00:03.72                       
+
+Case Processing Summary
+
+                    Cases                             
+                    Valid       Missing   Total       
+                    N   Percent N Percent N   Percent 
+ 学习投入总分 200 100.0%  0 .0%     200 100.0%  
+
+Tests of Normality
+
+                    Kolmogorov-Smirnov(a) Shapiro-Wilk       
+                    Statistic    df  Sig. Statistic df  Sig. 
+ 学习投入总分 .073         200 .012 .988      200 .101 
+a Lilliefors Significance Correction
+

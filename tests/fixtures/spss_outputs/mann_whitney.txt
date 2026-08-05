@@ -1,0 +1,37 @@
+NPar Tests
+Notes
+
+ Output Created                           05-AUG-2026 12:35:12                  
+ Comments                                                                       
+ Input     Data                           D:\opencode\spss-studio-mcp\examples\ 
+                                          data\experiment_study.sav             
+           Filter                         <none>                                
+           Weight                         <none>                                
+           Split File                     <none>                                
+           N of Rows in Working Data File 120                                   
+ Syntax                                   NPAR TESTS /M-W=posttest BY group(1   
+                                          2).                                   
+                                                                                
+ Resources Processor Time                 00:00:00.02                           
+           Elapsed Time                   00:00:00.02                           
+           Number of Cases Allowed(a)     449389                                
+a Based on availability of workspace memory.
+
+D:\opencode\spss-studio-mcp\examples\data\experiment_study.sav
+Mann-Whitney Test
+Ranks
+
+              实验分组 N   Mean Rank Sum of Ranks 
+ 后测成绩 训练组    57  72.90     4155.50      
+              对照组    63  49.28     3104.50      
+              Total        120                        
+
+Test Statistics(a)
+
+                        后测成绩 
+ Mann-Whitney U         1088.500     
+ Wilcoxon W             3104.500     
+ Z                      -3.717       
+ Asymp. Sig. (2-tailed) .000         
+a Grouping Variable: 实验分组
+

@@ -15,6 +15,12 @@ requires_spss = pytest.mark.skipif(
 
 
 MANIFEST_PATH = Path(__file__).parent / "fixtures" / "reproduction_manifest.json"
+DATA_DIR = Path(__file__).resolve().parents[1] / "examples" / "data"
+
+
+def _resolve_data_file(name: str) -> str:
+    """Resolve a manifest data file against the bundled example datasets."""
+    return str(DATA_DIR / name)
 
 
 def test_reproduction_manifest_structure():
@@ -34,13 +40,30 @@ def test_reproduction_manifest_structure():
 @requires_spss
 def test_reproduction_manifest_cases_execute_successfully():
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    from spss_mcp.spss_engine import get_engine
+
+    engine = get_engine()
+    try:
+        _run_cases(manifest)
+    finally:
+        # Release the engine so the trial license seat is not held after the test.
+        try:
+            import asyncio
+
+            asyncio.run(engine.stop())
+        except Exception:
+            pass
+
+
+def _run_cases(manifest: list) -> None:
+    import asyncio as _asyncio
 
     for case in manifest:
         if case.get("syntax_kind") == "raw":
-            result = asyncio.run(
+            result = _asyncio.run(
                 run_syntax(
                     case["params"]["syntax"],
-                    data_file=case["file_path"],
+                    data_file=_resolve_data_file(case["file_path"]),
                     filter_variable=case["execution_context"].get("filter_variable"),
                     select_if=case["execution_context"].get("select_if"),
                 )
@@ -50,7 +73,9 @@ def test_reproduction_manifest_cases_execute_successfully():
                 rendered = f"Error: {result['error']}\n\n{rendered}"
         else:
             tool = getattr(server, case["tool"])
-            rendered = asyncio.run(tool(file_path=case["file_path"], **case["params"]))
+            rendered = _asyncio.run(
+                tool(file_path=_resolve_data_file(case["file_path"]), **case["params"])
+            )
 
         assert rendered.startswith("Error:") is False, (
             case["id"] + " failed with output:\n" + rendered[:4000]

@@ -1,0 +1,39 @@
+NPar Tests
+Notes
+
+ Output Created                           05-AUG-2026 12:35:13                  
+ Comments                                                                       
+ Input     Data                           D:\opencode\spss-studio-mcp\examples\ 
+                                          data\experiment_study.sav             
+           Filter                         <none>                                
+           Weight                         <none>                                
+           Split File                     <none>                                
+           N of Rows in Working Data File 120                                   
+ Syntax                                   NPAR TESTS /WILCOXON=pretest WITH     
+                                          posttest (PAIRED).                    
+                                                                                
+ Resources Processor Time                 00:00:00.02                           
+           Elapsed Time                   00:00:00.02                           
+           Number of Cases Allowed(a)     449389                                
+a Based on availability of workspace memory.
+
+Wilcoxon Signed Ranks Test
+Ranks
+
+                             N      Mean Rank Sum of Ranks 
+ 后测成绩 Negative Ranks 16(a)  17.84     285.50       
+ -            Positive Ranks 101(b) 65.52     6617.50      
+ 前测成绩 Ties           3(c)                          
+              Total          120                           
+a 后测成绩 < 前测成绩
+b 后测成绩 > 前测成绩
+c 后测成绩 = 前测成绩
+
+Test Statistics(a)
+
+                        后测成绩 - 前测成绩 
+ Z                      -8.614(b)                   
+ Asymp. Sig. (2-tailed) .000                        
+a Wilcoxon Signed Ranks Test
+b Based on negative ranks.
+

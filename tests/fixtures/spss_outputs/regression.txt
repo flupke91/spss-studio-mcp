@@ -1,0 +1,78 @@
+Regression
+Notes
+
+ Output Created                                  05-AUG-2026 00:11:41           
+ Comments                                                                       
+ Input         Filter                            <none>                         
+               Weight                            <none>                         
+               Split File                        <none>                         
+               N of Rows in Working Data File    120                            
+ Missing Value Definition of Missing             User-defined missing values    
+ Handling                                        are treated as missing.        
+               Cases Used                        Statistics are based on cases  
+                                                 with no missing values for any 
+                                                 variable used.                 
+ Syntax                                          REGRESSION /DESCRIPTIVES=MEAN  
+                                                 STDDEV CORR SIG                
+                                                 /STATISTICS=COEFF OUTS CI(95)  
+                                                 R ANOVA /DEPENDENT=y           
+                                                 /METHOD=ENTER x group.         
+                                                                                
+ Resources     Processor Time                    00:00:00.02                    
+               Elapsed Time                      00:00:00.01                    
+               Memory Required                   2928 bytes                     
+               Additional Memory Required for    0 bytes                        
+               Residual Plots                                                   
+
+Descriptive Statistics
+
+       Mean   Std. Deviation N   
+ y     7.7819 3.40456        120 
+ x     4.0086 1.75782        120 
+ group .5000  .50210         120 
+
+Correlations
+
+                   y     x     group 
+ Pearson     y     1.000 .419  .674  
+ Correlation x     .419  1.000 -.081 
+             group .674  -.081 1.000 
+ Sig.        y     .     .000  .000  
+ (1-tailed)  x     .000  .     .189  
+             group .000  .189  .     
+
+Variables Entered/Removed(a)
+
+ Model Variables Entered Variables Removed Method 
+ 1     group, x(b)       .                 Enter  
+a Dependent Variable: y
+b All requested variables entered.
+
+Model Summary
+
+ Model R       R Square Adjusted R Square Std. Error of the Estimate 
+ 1     .824(a) .680     .674              1.94381                    
+a Predictors: (Constant), group, x
+
+ANOVA(a)
+
+ Model            Sum of Squares df  Mean Square F       Sig.    
+ 1     Regression 937.259        2   468.630     124.029 .000(b) 
+       Residual   442.072        117 3.778                       
+       Total      1379.331       119                             
+a Dependent Variable: y
+b Predictors: (Constant), group, x
+
+Coefficients(a)
+
+ Model            Unstandardized      Standard t      Sig. 95.0% Confidence     
+                  Coefficients        ized                 Interval for B       
+                                      Coeffici                                  
+                                      ents                                      
+                  B        Std. Error Beta                 Lower    Upper Bound 
+                                                           Bound                
+ 1     (Constant) 1.667    .491                3.395  .001 .695     2.640       
+       x          .923     .102       .476     9.073  .000 .721     1.124       
+       group      4.831    .356       .713     13.569 .000 4.126    5.537       
+a Dependent Variable: y
+

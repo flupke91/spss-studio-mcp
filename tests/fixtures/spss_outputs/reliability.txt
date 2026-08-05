@@ -1,0 +1,50 @@
+Reliability
+Notes
+
+ Output Created                               05-AUG-2026 12:35:11              
+ Comments                                                                       
+ Input         Data                           D:\opencode\spss-studio-mcp\examp 
+                                              les\data\survey_study.sav         
+               Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 200                               
+               Matrix Input                   D:\opencode\spss-studio-mcp\examp 
+                                              les\data\survey_study.sav         
+ Missing Value Definition of Missing          User-defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     Statistics are based on all cases 
+                                              with valid data for all variables 
+                                              in the procedure.                 
+ Syntax                                       RELIABILITY /VARIABLES=q1 q2 q3   
+                                              q4 /SCALE('cog') ALL /MODEL=ALPHA 
+                                              /SUMMARY=TOTAL.                   
+                                                                                
+ Resources     Processor Time                 00:00:00.00                       
+               Elapsed Time                   00:00:00.00                       
+
+Scale: cog
+Case Processing Summary
+
+                   N   %     
+ Cases Valid       200 100.0 
+       Excluded(a) 0   .0    
+       Total       200 100.0 
+a Listwise deletion based on all variables in the procedure.
+
+Reliability Statistics
+
+ Cronbach's Alpha(a) N of Items 
+ -.156               4          
+a The value is negative due to a negative average covariance among items. This violates reliability model assumptions. You may want to check item codings.
+
+Item-Total Statistics
+
+                      Scale Mean if Item   Scale Variance if    Corrected Item-Total Cronbach's Alpha if  
+                      Deleted              Item Deleted         Correlation          Item Deleted         
+ 学习投入题项 1 9.0700               2.065                .036                 -.332(a)             
+ 学习投入题项 2 9.1600               2.527                -.081                -.079(a)             
+ 学习投入题项 3 9.1800               2.490                -.111                -.014(a)             
+ 学习投入题项 4 9.4900               2.472                -.088                -.063(a)             
+a The value is negative due to a negative average covariance among items. This violates reliability model assumptions. You may want to check item codings.
+

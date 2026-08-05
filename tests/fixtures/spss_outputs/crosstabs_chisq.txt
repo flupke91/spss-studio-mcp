@@ -1,0 +1,51 @@
+Crosstabs
+Notes
+
+ Output Created                               05-AUG-2026 12:35:10              
+ Comments                                                                       
+ Input         Data                           D:\opencode\spss-studio-mcp\examp 
+                                              les\data\survey_study.sav         
+               Filter                         <none>                            
+               Weight                         <none>                            
+               Split File                     <none>                            
+               N of Rows in Working Data File 200                               
+ Missing Value Definition of Missing          User-defined missing values are   
+ Handling                                     treated as missing.               
+               Cases Used                     Statistics for each table are     
+                                              based on all the cases with valid 
+                                              data in the specified range(s)    
+                                              for all variables in each table.  
+ Syntax                                       CROSSTABS /TABLES=gender BY major 
+                                              /STATISTICS=CHISQ.                
+                                                                                
+ Resources     Processor Time                 00:00:00.03                       
+               Elapsed Time                   00:00:00.02                       
+               Dimensions Requested           2                                 
+               Cells Available                524245                            
+
+D:\opencode\spss-studio-mcp\examples\data\survey_study.sav
+Case Processing Summary
+
+                 Cases                             
+                 Valid       Missing   Total       
+                 N   Percent N Percent N   Percent 
+ 性别 * 专业 200 100.0%  0 .0%     200 100.0%  
+
+性别 * 专业 Crosstabulation
+ Count 
+
+            专业               Total 
+            文科 理科 工科       
+ 性别 男 43     42     28     113   
+        女 37     32     18     87    
+ Total      80     74     46     200   
+
+Chi-Square Tests
+
+                              Value   df Asymptotic Significance (2-sided) 
+ Pearson Chi-Square           .605(a) 2  .739                              
+ Likelihood Ratio             .608    2  .738                              
+ Linear-by-Linear Association .597    1  .440                              
+ N of Valid Cases             200                                          
+a 0 cells (.0%) have expected count less than 5. The minimum expected count is 20.01.
+

@@ -38,3 +38,11 @@ Thumbs.db
 .vscode/
 .idea/
 .claude/
+
+# Audit logs
+logs/
+
+# Local workspace artifacts
+作业/
+_tmp_*/
+.playwright-cli/
