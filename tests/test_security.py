@@ -5,6 +5,8 @@ import pytest
 
 from spss_mcp import security
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
 
 def test_check_syntax_safety_allows_normal_syntax():
     syntax = "FREQUENCIES VARIABLES=gender.\nDESCRIPTIVES VARIABLES=score.\n"
@@ -32,12 +34,9 @@ def test_check_syntax_safety_does_not_flag_variable_cd_in_expression():
 
 
 def test_validate_data_file_allows_examples():
-    assert (
-        security.validate_data_file(
-            "D:/opencode/spss-studio-mcp/examples/data/survey_study.sav"
-        )
-        is None
-    )
+    example = PROJECT_ROOT / "examples" / "data" / "survey_study.sav"
+    assert example.exists()
+    assert security.validate_data_file(str(example)) is None
 
 
 def test_validate_data_file_rejects_external_path():

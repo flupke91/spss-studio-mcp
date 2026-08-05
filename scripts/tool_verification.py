@@ -99,7 +99,12 @@ async def build_cases() -> list[dict]:
         (
             "genlin",
             server.spss_genlin(
-                file_path="D:/opencode/spss-studio-mcp/examples/data/mediation_study.sav",
+                file_path=str(
+                    Path(__file__).resolve().parents[1]
+                    / "examples"
+                    / "data"
+                    / "mediation_study.sav"
+                ),
                 dependent="performance",
                 predictors=["autonomy", "satisfaction"],
                 distribution="NORMAL",
