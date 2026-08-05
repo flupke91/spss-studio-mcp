@@ -20,6 +20,10 @@
 平台：LobeHub（Lobe Chat MCP/插件市场）。提交方式：通常为 GitHub 仓库提交
 描述文件或 PR。可复制以下条目：
 
+- 仓库：https://github.com/flupke91/spss-studio-mcp
+- LobeHub 插件市场提交入口：https://github.com/lobehub/lobe-chat-plugins
+  （创建 `plugins/<plugin-name>/` 目录，含 `plugin.json` + `README.md`）
+
 ```yaml
 # lobehub 条目示例
 name: spss-studio-mcp
@@ -35,6 +39,9 @@ tags: [spss, statistics, chart, mcp]
 
 平台：PulseMCP（MCP 服务器目录）。提交方式：站点表单或 GitHub PR。
 建议填写：
+
+- 提交入口：https://www.pulsemcp.com/submit
+- 仓库：https://github.com/flupke91/spss-studio-mcp
 
 - **Name**: spss-studio-mcp
 - **Short description**: Paper-ready charts, deep result parsing and safe execution for IBM SPSS Statistics via MCP.
@@ -61,10 +68,10 @@ tags: [spss, statistics, chart, mcp]
 
 ## 7. GitHub 发布步骤（发布账号操作）
 
-1. 创建公开仓库 `spss-studio-mcp`（含 README / LICENSE / .gitignore）；
-2. 推送 `main`（或 `master`）分支，打 tag `v1.0.0`；
-3. 在 Release 页面粘贴 `docs/release_notes_v1.0.md` 正文；
-4. 提交 LobeHub / PulseMCP 条目（见上）。
+- [x] 创建公开仓库 `flupke91/spss-studio-mcp` 并推送 `master`（2026-08-05）；
+- [x] 打 tag `v1.0.0` 并创建 Release（正文 = `docs/release_notes_v1.0.md`）；
+- [ ] 提交 LobeHub 条目（lobe-chat-plugins PR）；
+- [ ] 提交 PulseMCP 条目（pulsemcp.com/submit 表单）。
 
 ## 6. 对外材料（②的成果，可直接引用）
 
