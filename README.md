@@ -2,6 +2,8 @@
 
 > 让 SPSS 成为 Agent 的「统计引擎 + 制图工厂」：论文级图片、深度结果解析、方法真机验证、安全执行。
 
+**简体中文** ｜ [English](README.en.md)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![Tests](https://img.shields.io/badge/tests-109%20passed-brightgreen.svg)]()
@@ -117,7 +119,7 @@ spss_structured_result(
 
 ## 生态收录与发布
 
-- 状态：P0–P4 里程碑完成，v1.0.0 发布准备就绪；
+- 状态：P0–P4 里程碑完成，**v1.0.0 已发布**（[GitHub Releases](https://github.com/flupke91/spss-studio-mcp/releases)）；
 - LobeHub / PulseMCP 收录条目与提交清单：[docs/ecosystem.md](docs/ecosystem.md)；
 - Release v1.0.0 说明：[docs/release_notes_v1.0.md](docs/release_notes_v1.0.md)。
 
