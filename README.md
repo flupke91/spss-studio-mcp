@@ -21,6 +21,27 @@ Protocol）服务器，为 Codex / Claude Code / Cursor 等 Agent 客户端提�
 
 ---
 
+## 系统架构
+
+![SPSS Studio MCP 架构图](docs/diagrams/architecture.png)
+
+```text
+MCP 客户端（Codex / Claude Code / Cursor）
+        │  MCP 协议（stdio）
+        ▼
+工具层    60+ 工具：文件/元数据 · 37+ 分析方法 · 11 类图表 · 中介/调节 · 结构化结果
+        ▼
+语法构建   方法模板 + Pydantic 校验 ｜ 安全层（危险拦截 / 白名单 / dry_run / 审计）
+        ▼
+引擎层    SPSS Python3 XD API 持久会话（spss.StartSPSS / spss.Submit）
+        ▼
+输出层    OMS TEXT→Markdown+JSON 摘要 ｜ OMS HTML→PNG/TIFF ｜ OMS DOCX→EMF
+        ▼
+IBM SPSS Statistics 32.0.0（Windows，本地授权）
+```
+
+架构源文件（draw.io 可编辑）：[docs/diagrams/architecture.drawio](docs/diagrams/architecture.drawio)
+
 ## 快速开始
 
 ```powershell
@@ -109,7 +130,7 @@ spss_structured_result(
 
 ## 文档
 
-- [使用教程](docs/tutorial.md)
+- [Agent 傻瓜式使用教程](docs/tutorial.md)：包含一键安装 Prompt、Codex/Claude Code 配置、论文分析场景和故障排查
 - [技术报告（论文稿）](docs/technical_report.md)
 - [出图管线 PoC 与 SPSS 32 兼容性发现](docs/poc_chart_pipeline.md)
 - [结果解析（16 类分析摘要）](docs/result_parsing.md)

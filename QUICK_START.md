@@ -54,6 +54,7 @@ spss-studio-mcp setup-info          # 手动配置片段
 
 - 样例数据与归档图：`examples/`
 - 文档：`docs/`（出图管线 PoC、结果解析、方法验证记录）
+- Agent 完整教程：[`docs/tutorial.md`](docs/tutorial.md)（可直接复制安装和分析 Prompt）
 
 ## 常见问题
 
