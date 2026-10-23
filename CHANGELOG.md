@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.0] - 2026-08-05
+
+首个正式版。在 0.3.1 的基础上把真机验证范围拉满，并补齐 Agent 侧消费契约。
+
+### Added
+- **论文级出图补齐到 11 类** `spss_chart_*`：直方图 / 正态密度叠加 / 散点 / 分类均值条形 /
+  条形+95%CI / 折线 / 面积 / 分组箱线 / 误差条 / Q-Q / Kaplan-Meier 曲线，
+  统一 PNG / TIFF / EMF 导出（1950×1500 @300dpi），返回文件路径可直接投稿
+- **中介与调节**：`spss_mediation`（Baron & Kenny 三步回归 + Sobel）、
+  `spss_moderation`（中心化交互回归）
+- **统一返回结构** `{markdown, json, files, warnings}`，便于 Agent 编程消费
+- **安全执行层**：危险命令拦截、数据路径白名单、`dry_run` 预检、JSONL 审计日志
+
+### Fixed
+- SPSS 32 移除 `OMS FORMAT=IMAGE` / `IMAGEROOT`，改用 HTML 内嵌 PNG + DOCX 内嵌 EMF 双链路
+- 修复 8 处 SPSS 32 语法兼容问题，37+ 工具（26 个分析方法 + 11 个补充工具）全部真机验收通过
+
+### Changed
+- 版本号从 `0.3.1` 直接跳到 `1.0.0`：能力范围（出图 + 中介调节 + 安全层 + 结构化返回）
+  与真机验收覆盖度已构成完整产品形态，不再以 0.x 迭代
+
 ## [0.3.1] - 2026-08-05
 
 ### Fixed
