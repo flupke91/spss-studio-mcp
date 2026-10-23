@@ -6,7 +6,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![Tests](https://img.shields.io/badge/tests-109%20passed-brightgreen.svg)]()
+[![CI](https://github.com/flupke91/spss-studio-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/flupke91/spss-studio-mcp/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/flupke91/spss-studio-mcp)](https://github.com/flupke91/spss-studio-mcp/releases)
 
 `spss-studio-mcp` is an MCP (Model Context Protocol) server for **IBM SPSS
 Statistics**. It gives Agent clients such as Codex / Claude Code / Cursor:
