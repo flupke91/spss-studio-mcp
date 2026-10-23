@@ -6,7 +6,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![Tests](https://img.shields.io/badge/tests-109%20passed-brightgreen.svg)]()
+[![CI](https://github.com/flupke91/spss-studio-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/flupke91/spss-studio-mcp/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/flupke91/spss-studio-mcp)](https://github.com/flupke91/spss-studio-mcp/releases)
 
 `spss-studio-mcp` 是一个面向 **IBM SPSS Statistics** 的 MCP（Model Context
 Protocol）服务器，为 Codex / Claude Code / Cursor 等 Agent 客户端提供：
