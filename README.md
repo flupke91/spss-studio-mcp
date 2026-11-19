@@ -20,6 +20,8 @@ Protocol）服务器，为 Codex / Claude Code / Cursor 等 Agent 客户端提�
 
 全部能力已在 **IBM SPSS Statistics 32.0.0（Windows）** 真机验证（109 个单元测试全部通过）。
 
+> **版本兼容性**：`v1.0.0` 在 **SPSS 32（Windows）** 完成全量真机验收；安装有 Python 3 Essentials（`<SPSS_DIR>\Python3\python.exe`）的 **SPSS 27–31（Windows）** 在接口和 OMS 导出路径上预计兼容（尚未真机全量验证，可用 `spss-studio-mcp status` 检查）。
+
 ---
 
 ## 系统架构

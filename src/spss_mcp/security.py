@@ -24,16 +24,18 @@ from typing import Optional
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # Commands that can touch the OS, other files, or the SPSS process itself.
-# Matched at the start of a line to avoid false positives on variable names.
+# Matched at the start of each SPSS statement to prevent chained-line bypasses
+# while avoiding false positives on variable names such as `cd`.
 DANGEROUS_PATTERNS: tuple[re.Pattern, ...] = (
-    re.compile(r"(?m)^\s*HOST\b", re.IGNORECASE),
-    re.compile(r"(?m)^\s*ERASE\b", re.IGNORECASE),
-    re.compile(r"(?m)^\s*DELETE\b.*\bFILE\b", re.IGNORECASE),
-    re.compile(r"(?m)^\s*FILE\s+HANDLE\b", re.IGNORECASE),
-    re.compile(r"(?m)^\s*INSERT\s+FILE\b", re.IGNORECASE),
-    re.compile(r"(?m)^\s*SCRIPT\b", re.IGNORECASE),
-    re.compile(r"(?m)^\s*CD\b", re.IGNORECASE),
-    re.compile(r"(?m)^\s*SYSTEM\b", re.IGNORECASE),
+    re.compile(r"^\s*HOST\b", re.IGNORECASE),
+    re.compile(r"^\s*ERASE\b", re.IGNORECASE),
+    re.compile(r"^\s*DELETE\b.*\bFILE\b", re.IGNORECASE | re.DOTALL),
+    re.compile(r"^\s*FILE\s+HANDLE\b", re.IGNORECASE),
+    re.compile(r"^\s*INSERT\s+FILE\b", re.IGNORECASE),
+    re.compile(r"^\s*SCRIPT\b", re.IGNORECASE),
+    re.compile(r"^\s*CD\b", re.IGNORECASE),
+    re.compile(r"^\s*SYSTEM\b", re.IGNORECASE),
+    re.compile(r"^\s*BEGIN\s+PROGRAM\b", re.IGNORECASE),
 )
 
 DANGEROUS_LABELS: tuple[str, ...] = (
@@ -45,15 +47,53 @@ DANGEROUS_LABELS: tuple[str, ...] = (
     "SCRIPT",
     "CD",
     "SYSTEM",
+    "BEGIN PROGRAM",
 )
+
+_LEADING_BLOCK_COMMENT_RE = re.compile(r"^(?:\s|/\*.*?\*/)+", re.DOTALL)
+
+
+def _iter_statements(syntax: str) -> list[str]:
+    """Split SPSS syntax into stripped statements on unquoted command periods."""
+    statements: list[str] = []
+    buf: list[str] = []
+    quote: Optional[str] = None
+    n = len(syntax)
+    i = 0
+    while i < n:
+        ch = syntax[i]
+        if quote is not None:
+            buf.append(ch)
+            if ch == quote:
+                if i + 1 < n and syntax[i + 1] == quote:
+                    buf.append(syntax[i + 1])
+                    i += 2
+                    continue
+                quote = None
+        elif ch in ("'", '"'):
+            quote = ch
+            buf.append(ch)
+        elif ch == "." and (i + 1 == n or syntax[i + 1].isspace()):
+            stmt = _LEADING_BLOCK_COMMENT_RE.sub("", "".join(buf)).strip()
+            if stmt:
+                statements.append(stmt)
+            buf = []
+        else:
+            buf.append(ch)
+        i += 1
+    tail = _LEADING_BLOCK_COMMENT_RE.sub("", "".join(buf)).strip()
+    if tail:
+        statements.append(tail)
+    return statements
 
 
 def check_syntax_safety(syntax: str) -> list[str]:
     """Return the dangerous commands detected in ``syntax`` (empty = safe)."""
-    hits = []
-    for pattern, label in zip(DANGEROUS_PATTERNS, DANGEROUS_LABELS):
-        if pattern.search(syntax):
-            hits.append(label)
+    hits: list[str] = []
+    for stmt in _iter_statements(syntax):
+        for pattern, label in zip(DANGEROUS_PATTERNS, DANGEROUS_LABELS):
+            if pattern.match(stmt) and label not in hits:
+                hits.append(label)
     return hits
 
 
@@ -62,7 +102,7 @@ def get_allowed_dirs() -> list[Path]:
     dirs: list[Path] = []
     env = os.environ.get("SPSS_ALLOWED_DIRS", "").strip()
     if env:
-        for raw in env.split(";"):
+        for raw in env.split(os.pathsep):
             if raw.strip():
                 dirs.append(Path(raw.strip()).resolve())
     dirs.append((_PROJECT_ROOT / "examples").resolve())

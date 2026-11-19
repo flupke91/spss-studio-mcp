@@ -29,6 +29,11 @@ Statistics**. It gives Agent clients such as Codex / Claude Code / Cursor:
 Everything is verified on **IBM SPSS Statistics 32.0.0 (Windows)** — 109 unit
 tests pass, including a self-contained real-machine reproduction manifest.
 
+> **Version compatibility**: Full hardware verification ran on **SPSS 32 (Windows)**.
+> **SPSS 27–31 (Windows)** with Python 3 Essentials (`<SPSS_DIR>\Python3\python.exe`)
+> uses the same XD API and OMS HTML/DOCX export paths and is expected to work
+> (run `spss-studio-mcp status` to verify your local install).
+
 ---
 
 ## Quick Start

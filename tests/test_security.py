@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -28,9 +29,44 @@ def test_check_syntax_safety_blocks_file_handle_and_script():
 
 
 def test_check_syntax_safety_does_not_flag_variable_cd_in_expression():
-    # "CD" only matched at the start of a line, not as a variable name
-    syntax = "COMPUTE cd = 1.\n"
+    # "CD" only matched at the start of a statement, not as a variable name
+    syntax = "COMPUTE cd = 1.\nCOMPUTE x =\n  cd + 3.14.\n"
     assert security.check_syntax_safety(syntax) == []
+
+
+def test_check_syntax_safety_blocks_begin_program():
+    assert "BEGIN PROGRAM" in security.check_syntax_safety(
+        "BEGIN PROGRAM.\nimport os\nEND PROGRAM.\n"
+    )
+    assert "BEGIN PROGRAM" in security.check_syntax_safety(
+        "BEGIN PROGRAM PYTHON3.\nimport os\nEND PROGRAM.\n"
+    )
+    assert "BEGIN PROGRAM" in security.check_syntax_safety(
+        "BEGIN PROGRAM R.\nsystem('id')\nEND PROGRAM.\n"
+    )
+
+
+def test_check_syntax_safety_blocks_inline_chained_statements():
+    assert "HOST" in security.check_syntax_safety(
+        "DESCRIPTIVES x. HOST COMMAND=['calc'].\n"
+    )
+    assert "HOST" in security.check_syntax_safety("/* benign */ HOST COMMAND='dir'.\n")
+
+
+def test_check_syntax_safety_ignores_period_inside_quotes():
+    syntax = "COMPUTE label = 'Dr. Host'.\n"
+    assert security.check_syntax_safety(syntax) == []
+
+
+def test_get_allowed_dirs_uses_os_pathsep(tmp_path, monkeypatch):
+    dir_a = tmp_path / "dir_a"
+    dir_b = tmp_path / "dir_b"
+    dir_a.mkdir()
+    dir_b.mkdir()
+    monkeypatch.setenv("SPSS_ALLOWED_DIRS", f"{dir_a}{os.pathsep}{dir_b}")
+    allowed = security.get_allowed_dirs()
+    assert dir_a.resolve() in allowed
+    assert dir_b.resolve() in allowed
 
 
 def test_validate_data_file_allows_examples():

@@ -63,7 +63,7 @@ def _find_spss_via_filesystem() -> str | None:
         r"D:\spss",
         r"E:\spss",
     ]
-    versions = list(range(20, 32))  # SPSS 20 through 31
+    versions = list(range(20, 36))  # SPSS 20 through 35
     for root in common_roots:
         # Check versioned subdirectories (newest first)
         for v in reversed(versions):
